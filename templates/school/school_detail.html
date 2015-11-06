@@ -3,4 +3,7 @@
 <h1>{{ school.title }}</h1>
 <p>{{ school.description }}</p>
 <p>Asked by {{ school.user.username }} on {{ school.created_at }}</p>
+{% if school.user == user %}
+<p><a href="{% url 'school_update' pk=school.id %}">Edit school</a></p>
+{% endif %}
 {% endblock %}

@@ -8,4 +8,5 @@ urlpatterns = patterns('',
     url(r'^school/create/$', SchoolCreateView.as_view(), name='school_create'),
     url(r'school/$', SchoolListView.as_view(), name='school_list'),
     url(r'^school/(?P<pk>\d+)/$', SchoolDetailView.as_view(), name='school_detail'),
+    url(r'^school/update/(?P<pk>\d+)/$', SchoolUpdateView.as_view(), name='school_update'),
 )

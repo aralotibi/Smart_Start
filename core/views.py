@@ -3,6 +3,7 @@ from django.views.generic import TemplateView
 from django.views.generic import DetailView
 from django.views.generic import CreateView
 from django.views.generic import ListView
+from django.views.generic import UpdateView
 from django.core.urlresolvers import reverse_lazy
 from .models import *
 
@@ -27,3 +28,8 @@ class SchoolListView(ListView):
 class SchoolDetailView(DetailView):
     model = School
     template_name = 'school/school_detail.html'
+
+class SchoolUpdateView(UpdateView):
+    model = School
+    template_name = 'school/school_form.html'
+    fields = ['title', 'description']
