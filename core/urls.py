@@ -10,4 +10,5 @@ urlpatterns = patterns('',
     url(r'^school/(?P<pk>\d+)/$', SchoolDetailView.as_view(), name='school_detail'),
     url(r'^school/update/(?P<pk>\d+)/$', SchoolUpdateView.as_view(), name='school_update'),
     url(r'^school/delete/(?P<pk>\d+)/$', SchoolDeleteView.as_view(), name='school_delete'),
+    url(r'^school/(?P<pk>\d+)/review/create/$', ReviewCreateView.as_view(), name='review_create'),
 )
