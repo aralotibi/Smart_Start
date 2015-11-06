@@ -111,22 +111,22 @@ class VoteFormView(FormView):
     form_class = VoteForm
 
     def form_valid(self, form):
-    user = self.request.user
-    school = School.objects.get(pk=form.data["school"])
-    try:
-        review = Review.objects.get(pk=form.data["review"])
-        prev_votes = Vote.objects.filter(user=user, review=review)
-        has_voted = (prev_votes.count()>0)
-        if not has_voted:
-            Vote.objects.create(user=user, review=review)
-        else:
-            prev_votes[0].delete()
-        return redirect(reverse('\school_detail', args=[form.data["school"]]))
-    except:
-        prev_votes = Vote.objects.filter(user=user, school=school)
-        has_voted = (prev_votes.count()>0)
-        if not has_voted:
-            Vote.objects.create(user=user, school=school)
-        else:
-            prev_votes[0].delete()
-    return redirect('school_list')
+        user = self.request.user
+        school = School.objects.get(pk=form.data["school"])
+        try:
+            review = Review.objects.get(pk=form.data["review"])
+            prev_votes = Vote.objects.filter(user=user, review=review)
+            has_voted = (prev_votes.count()>0)
+            if not has_voted:
+                Vote.objects.create(user=user, review=review)
+            else:
+                prev_votes[0].delete()
+            return redirect(reverse('school_detail', args=[form.data["school"]]))
+        except:
+            prev_votes = Vote.objects.filter(user=user, school=school)
+            has_voted = (prev_votes.count()>0)
+            if not has_voted:
+                Vote.objects.create(user=user, school=school)
+            else:
+                prev_votes[0].delete()
+        return redirect('school_list')

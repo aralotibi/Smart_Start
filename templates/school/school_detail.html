@@ -14,19 +14,19 @@
 <div class="panel">
     <p>{{ review.text }}</p>
     {% if review.user == user %}
-<p><a href="{% url 'review_update' school_pk=school.id review_pk=review.id %}">Edit review</a></p>
-<p><a href="{% url 'review_delete' school_pk=school.id review_pk=review.id %}">Delete review</a></p>
+    <p><a href="{% url 'review_update' school_pk=school.id review_pk=review.id %}">Edit review</a></p>
+    <p><a href="{% url 'review_delete' school_pk=school.id review_pk=review.id %}">Delete review</a></p>
 
-{% endif %}
+    {% endif %}
     <p>Reviewed by {{ review.user.username }} on {{ review.created_at }}</p>
     <p>{{ review.vote_set.all.count }} Vote{{ review.vote_set.all.count|pluralize }}</p>
-<form method="post" action="{% url 'vote' %}">
+    <form method="post" action="{% url 'vote' %}">
     {% csrf_token %}
     <input type="hidden" name="review" value="{{ review.id }}" />
     <input type="hidden" name="school" value="{{ school.id }}" />
     <input type="hidden" name="user" value="{{ user.id }}" />
     <button>+</button>
-</form>
+  </form>
 </div>
 {% endfor %}
 {% if not user_reviews %}
