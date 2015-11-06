@@ -30,18 +30,25 @@ class SchoolListView(ListView):
     model = School
     template_name = "school/school_list.html"
     paginate_by = 5
+    def get_context_data(self, **kwargs):
+      context = super(SchoolListView, self).get_context_data(**kwargs)
+      user_votes = School.objects.filter(vote__user=self.request.user)
+      context['user_votes'] = user_votes
+      return context
 
 class SchoolDetailView(DetailView):
     model = School
     template_name = 'school/school_detail.html'
     def get_context_data(self, **kwargs):
-        context = super(SchoolDetailView, self).get_context_data(**kwargs)
-        school = School.objects.get(id=self.kwargs['pk'])
-        reviews = Review.objects.filter(school=school)
-        context['reviews'] = reviews
-        user_reviews = Review.objects.filter(school=school, user=self.request.user)
-        context['user_reviews'] = user_reviews
-        return context
+      context = super(SchoolDetailView, self).get_context_data(**kwargs)
+      school = School.objects.get(id=self.kwargs['pk'])
+      reviews = Review.objects.filter(school=school)
+      context['reviews'] = reviews
+      user_reviews = Review.objects.filter(school=school, user=self.request.user)
+      context['user_reviews'] = user_reviews
+      user_votes = Review.objects.filter(vote__user=self.request.user)
+      context['user_votes'] = user_votes
+      return context
 
 class SchoolUpdateView(UpdateView):
     model = School
@@ -185,3 +192,4 @@ class SearchSchoolListView(SchoolListView):
     def get_queryset(self):
         incoming_query_string = self.request.GET.get('query','')
         return School.objects.filter(title__icontains=incoming_query_string)
+
