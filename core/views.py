@@ -29,7 +29,7 @@ class SchoolCreateView(CreateView):
 class SchoolListView(ListView):
     model = School
     template_name = "school/school_list.html"
-
+    paginate_by = 5
 
 class SchoolDetailView(DetailView):
     model = School
