@@ -26,9 +26,18 @@ class SchoolListView(ListView):
     model = School
     template_name = "school/school_list.html"
 
+
 class SchoolDetailView(DetailView):
     model = School
     template_name = 'school/school_detail.html'
+
+
+    def get_context_data(self, **kwargs):
+        context = super(SchoolDetailView, self).get_context_data(**kwargs)
+        school = School.objects.get(id=self.kwargs['pk'])
+        reviews = Review.objects.filter(school=school)
+        context['reviews'] = reviews
+        return context
 
 class SchoolUpdateView(UpdateView):
     model = School
@@ -52,3 +61,4 @@ class ReviewCreateView(CreateView):
         form.instance.user = self.request.user
         form.instance.school = School.objects.get(id=self.kwargs['pk'])
         return super(ReviewCreateView, self).form_valid(form)
+

@@ -7,5 +7,14 @@
 <p><a href="{% url 'school_update' pk=school.id %}">Edit school</a></p>
 <p><a href="{% url 'school_delete' pk=school.id %}">Delete school</a></p>
 {% endif %}
+{% if reviews.count > 0 %}
+<h3>{{ reviews.count }} Review{{ reviews.count|pluralize }}:</h3>
+{% endif %}
+{% for review in reviews %}
+<div class="panel">
+    <p>{{ review.text }}</p>
+    <p>Reviewed by {{ review.user.username }} on {{ review.created_at }}</p>
+</div>
+{% endfor %}
 <p><a href="{% url 'review_create' pk=school.id %}">Write review</a></p>
 {% endblock %}
