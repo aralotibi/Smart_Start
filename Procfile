@@ -1,1 +1,1 @@
-web: gunicorn qandu_app.wsgi --log-file -
+web: gunicorn Smart_Start.wsgi --log-file -
