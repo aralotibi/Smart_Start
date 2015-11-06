@@ -5,6 +5,7 @@ from django.views.generic import CreateView
 from django.views.generic import ListView
 from django.views.generic import UpdateView
 from django.views.generic import DeleteView
+from django.core.exceptions import PermissionDenied
 from django.core.urlresolvers import reverse_lazy
 from .models import *
 
@@ -43,11 +44,21 @@ class SchoolUpdateView(UpdateView):
     model = School
     template_name = 'school/school_form.html'
     fields = ['title', 'description']
+    def get_object(self, *args, **kwargs):
+        object = super(SchoolUpdateView, self).get_object(*args, **kwargs)
+        if object.user != self.request.user:
+            raise PermissionDenied()
+        return object
 
 class SchoolDeleteView(DeleteView):
     model = School
     template_name = 'school/school_confirm_delete.html'
     success_url = reverse_lazy('school_list')
+    def get_object(self, *args, **kwargs):
+        object = super(SchoolDeleteView, self).get_object(*args, **kwargs)
+        if object.user != self.request.user:
+            raise PermissionDenied()
+        return object
 
 class ReviewCreateView(CreateView):
     model = Review
@@ -70,6 +81,11 @@ class ReviewUpdateView(UpdateView):
 
     def get_success_url(self):
         return self.object.school.get_absolute_url()
+    def get_object(self, *args, **kwargs):
+        object = super(RevieewUpdateView, self).get_object(*args, **kwargs)
+        if object.user != self.request.user:
+            raise PermissionDenied()
+        return object
 
 class ReviewDeleteView(DeleteView):
     model = Review
@@ -78,4 +94,9 @@ class ReviewDeleteView(DeleteView):
 
     def get_success_url(self):
         return self.object.school.get_absolute_url()
+    def get_object(self, *args, **kwargs):
+        object = super(ReviewUpdateView, self).get_object(*args, **kwargs)
+        if object.user != self.request.user:
+            raise PermissionDenied()
+        return object
 
