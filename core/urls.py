@@ -13,7 +13,7 @@ urlpatterns = patterns('',
     url(r'^school/delete/(?P<pk>\d+)/$', SchoolDeleteView.as_view(), name='school_delete'),
     url(r'^school/(?P<pk>\d+)/review/create/$', ReviewCreateView.as_view(), name='review_create'),
     url(r'^school/(?P<school_pk>\d+)/review/update/(?P<review_pk>\d+)/$', ReviewUpdateView.as_view(), name='review_update'),
-
+    url(r'^school/(?P<school_pk>\d+)/review/delete/(?P<review_pk>\d+)/$', ReviewDeleteView.as_view(), name='review_delete'),
 
 
 )
