@@ -4,6 +4,7 @@ from django.views.generic import DetailView
 from django.views.generic import CreateView
 from django.views.generic import ListView
 from django.views.generic import UpdateView
+from django.views.generic import DeleteView
 from django.core.urlresolvers import reverse_lazy
 from .models import *
 
@@ -33,3 +34,8 @@ class SchoolUpdateView(UpdateView):
     model = School
     template_name = 'school/school_form.html'
     fields = ['title', 'description']
+
+class SchoolDeleteView(DeleteView):
+    model = School
+    template_name = 'school/school_confirm_delete.html'
+    success_url = reverse_lazy('school_list')
