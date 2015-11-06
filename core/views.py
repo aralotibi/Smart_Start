@@ -7,6 +7,9 @@ from django.views.generic import UpdateView
 from django.views.generic import DeleteView
 from django.core.exceptions import PermissionDenied
 from django.core.urlresolvers import reverse_lazy
+from django.shortcuts import redirect
+from django.views.generic import FormView
+from .forms import *
 from .models import *
 
 # Create your views here.
@@ -104,3 +107,16 @@ class ReviewDeleteView(DeleteView):
             raise PermissionDenied()
         return object
 
+class VoteFormView(FormView):
+    form_class = VoteForm
+
+    def form_valid(self, form):
+        user = self.request.user
+        school = School.objects.get(pk=form.data["school"])
+        prev_votes = Vote.objects.filter(user=user, school=school)
+        has_voted = (prev_votes.count()>0)
+        if not has_voted:
+            Vote.objects.create(user=user, school=school)
+        else:
+            prev_votes[0].delete()
+        return redirect('school_list')

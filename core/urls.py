@@ -14,6 +14,6 @@ urlpatterns = patterns('',
     url(r'^school/(?P<pk>\d+)/review/create/$', login_required(ReviewCreateView.as_view()) , name='review_create'),
     url(r'^school/(?P<school_pk>\d+)/review/update/(?P<review_pk>\d+)/$', login_required(ReviewUpdateView.as_view()) , name='review_update'),
     url(r'^school/(?P<school_pk>\d+)/review/delete/(?P<review_pk>\d+)/$', login_required(ReviewDeleteView.as_view()) , name='review_delete'),
-
+    url(r'^vote/$', login_required(VoteFormView.as_view()), name='vote'),
 
 )
