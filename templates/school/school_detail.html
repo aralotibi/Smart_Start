@@ -21,5 +21,7 @@
     <p>Reviewed by {{ review.user.username }} on {{ review.created_at }}</p>
 </div>
 {% endfor %}
-<p><a href="{% url 'review_create' pk=school.id %}">Write review</a></p>
+{% if not user_reviews %}
+    <p><a href="{% url 'review_create' pk=school.id %}">Write review</a></p>
+{% endif %}
 {% endblock %}

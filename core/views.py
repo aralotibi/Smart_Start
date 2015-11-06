@@ -31,13 +31,13 @@ class SchoolListView(ListView):
 class SchoolDetailView(DetailView):
     model = School
     template_name = 'school/school_detail.html'
-
-
     def get_context_data(self, **kwargs):
         context = super(SchoolDetailView, self).get_context_data(**kwargs)
         school = School.objects.get(id=self.kwargs['pk'])
         reviews = Review.objects.filter(school=school)
         context['reviews'] = reviews
+        user_reviews = Review.objects.filter(school=school, user=self.request.user)
+        context['user_reviews'] = user_reviews
         return context
 
 class SchoolUpdateView(UpdateView):
@@ -69,6 +69,10 @@ class ReviewCreateView(CreateView):
         return self.object.school.get_absolute_url()
 
     def form_valid(self, form):
+        school = School.objects.get(id=self.kwargs['pk'])
+        if Review.objects.filter(school=school, user=self.request.user).exists():
+          raise PermissionDenied()
+
         form.instance.user = self.request.user
         form.instance.school = School.objects.get(id=self.kwargs['pk'])
         return super(ReviewCreateView, self).form_valid(form)
