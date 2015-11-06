@@ -3,7 +3,7 @@
 {% for school in object_list %}
 <div class="panel">
     <h3><a href="{{ school.get_absolute_url }}">{{ school.title }}</a></h3>
-    <p>Asked by <a href="{% url 'user_detail' slug=school.user.username %}">{{ school.user.username }}</a> on {{ school.created_at }}</p>
+    <p>Asked {% if school.visibility == 0 %} by <a href="{% url 'user_detail' slug=school.user.username %}">{{ school.user.username }}</a> {% endif %} on {{ school.created_at }}</p>
     <p>{{ school.vote_set.all.count }} Vote{{ school.vote_set.all.count|pluralize }}</p>
 <form method="post" action="{% url 'vote' %}">
     {% csrf_token %}

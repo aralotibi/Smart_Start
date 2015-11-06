@@ -18,8 +18,8 @@ class Home(TemplateView):
 
 class SchoolCreateView(CreateView):
     model = School
-    template_name = "school/school_form.html"
-    fields = ['title', 'description']
+    template_name = 'school/school_form.html'
+    fields = ['title', 'description', 'visibility']
     success_url = reverse_lazy('school_list')
 
     def form_valid(self, form):
@@ -66,7 +66,7 @@ class SchoolDeleteView(DeleteView):
 class ReviewCreateView(CreateView):
     model = Review
     template_name = "review/review_form.html"
-    fields = ['text']
+    fields = ['text', 'visibility']
 
     def get_success_url(self):
         return self.object.school.get_absolute_url()
@@ -74,7 +74,7 @@ class ReviewCreateView(CreateView):
     def form_valid(self, form):
         school = School.objects.get(id=self.kwargs['pk'])
         if Review.objects.filter(school=school, user=self.request.user).exists():
-          raise PermissionDenied()
+              raise PermissionDenied()
 
         form.instance.user = self.request.user
         form.instance.school = School.objects.get(id=self.kwargs['pk'])
@@ -139,9 +139,9 @@ class UserDetailView(DetailView):
     def get_context_data(self, **kwargs):
       context = super(UserDetailView, self).get_context_data(**kwargs)
       user_in_view = User.objects.get(username=self.kwargs['slug'])
-      schools = School.objects.filter(user=user_in_view)
+      schools = School.objects.filter(user=user_in_view).exclude(visibility=1)
       context['schools'] = schools
-      reviews = Review.objects.filter(user=user_in_view)
+      reviews = Review.objects.filter(user=user_in_view).exclude(visibility=1)
       context['reviews'] = reviews
       return context
 
