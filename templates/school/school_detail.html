@@ -1,0 +1,6 @@
+{% extends 'base.html' %}
+{% block content %}
+<h1>{{ school.title }}</h1>
+<p>{{ school.description }}</p>
+<p>Asked by {{ school.user.username }} on {{ school.created_at }}</p>
+{% endblock %}
