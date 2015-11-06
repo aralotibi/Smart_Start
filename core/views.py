@@ -180,3 +180,8 @@ class UserUpdateView(UpdateView):
         if object != self.request.user:
             raise PermissionDenied()
         return object
+
+class SearchSchoolListView(SchoolListView):
+    def get_queryset(self):
+        incoming_query_string = self.request.GET.get('query','')
+        return School.objects.filter(title__icontains=incoming_query_string)
