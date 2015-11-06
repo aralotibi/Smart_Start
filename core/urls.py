@@ -1,19 +1,19 @@
 from django.conf.urls import patterns, include, url
-
+from django.contrib.auth.decorators import login_required
 from .views import *
 
 urlpatterns = patterns('',
     url(r'^$', Home.as_view(), name='home'),
     url(r'^user/', include('registration.backends.simple.urls')),
     url(r'^user/', include('django.contrib.auth.urls')),
-    url(r'^school/create/$', SchoolCreateView.as_view(), name='school_create'),
-    url(r'school/$', SchoolListView.as_view(), name='school_list'),
-    url(r'^school/(?P<pk>\d+)/$', SchoolDetailView.as_view(), name='school_detail'),
-    url(r'^school/update/(?P<pk>\d+)/$', SchoolUpdateView.as_view(), name='school_update'),
-    url(r'^school/delete/(?P<pk>\d+)/$', SchoolDeleteView.as_view(), name='school_delete'),
-    url(r'^school/(?P<pk>\d+)/review/create/$', ReviewCreateView.as_view(), name='review_create'),
-    url(r'^school/(?P<school_pk>\d+)/review/update/(?P<review_pk>\d+)/$', ReviewUpdateView.as_view(), name='review_update'),
-    url(r'^school/(?P<school_pk>\d+)/review/delete/(?P<review_pk>\d+)/$', ReviewDeleteView.as_view(), name='review_delete'),
+    url(r'^school/create/$', login_required(SchoolCreateView.as_view()), name='school_create'),
+    url(r'school/$', login_required(SchoolListView.as_view()), name='school_list'),
+    url(r'^school/(?P<pk>\d+)/$', login_required(SchoolDetailView.as_view()), name='school_detail'),
+    url(r'^school/update/(?P<pk>\d+)/$', login_required(SchoolUpdateView.as_view()) , name='school_update'),
+    url(r'^school/delete/(?P<pk>\d+)/$', login_required(SchoolDeleteView.as_view()) , name='school_delete'),
+    url(r'^school/(?P<pk>\d+)/review/create/$', login_required(ReviewCreateView.as_view()) , name='review_create'),
+    url(r'^school/(?P<school_pk>\d+)/review/update/(?P<review_pk>\d+)/$', login_required(ReviewUpdateView.as_view()) , name='review_update'),
+    url(r'^school/(?P<school_pk>\d+)/review/delete/(?P<review_pk>\d+)/$', login_required(ReviewDeleteView.as_view()) , name='review_delete'),
 
 
 )
