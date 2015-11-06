@@ -1,0 +1,9 @@
+{% extends 'base.html' %}
+{% block content %}
+{% for school in object_list %}
+<div class="panel">
+    <h3>{{ school.title }}</h3>
+    <p>Asked by {{ school.user.username }} on {{ school.created_at }}</p>
+</div>
+{% endfor %}
+{% endblock %}
