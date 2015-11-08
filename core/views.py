@@ -96,7 +96,7 @@ class ReviewUpdateView(UpdateView):
     def get_success_url(self):
         return self.object.school.get_absolute_url()
     def get_object(self, *args, **kwargs):
-        object = super(RevieewUpdateView, self).get_object(*args, **kwargs)
+        object = super(ReviewUpdateView, self).get_object(*args, **kwargs)
         if object.user != self.request.user:
             raise PermissionDenied()
         return object
@@ -109,7 +109,7 @@ class ReviewDeleteView(DeleteView):
     def get_success_url(self):
         return self.object.school.get_absolute_url()
     def get_object(self, *args, **kwargs):
-        object = super(ReviewUpdateView, self).get_object(*args, **kwargs)
+        object = super(ReviewDeleteView, self).get_object(*args, **kwargs)
         if object.user != self.request.user:
             raise PermissionDenied()
         return object
