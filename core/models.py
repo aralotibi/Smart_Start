@@ -10,14 +10,14 @@ VISIBILITY_CHOICES = (
 # Create your models here.
 
 class School(models.Model):
-  title = models.CharField(max_length=300)
+  name = models.CharField(max_length=300)
   description = models.TextField(null=True, blank=True)
   created_at = models.DateTimeField(auto_now_add=True)
   user = models.ForeignKey(User)
   visibility = models.IntegerField(choices=VISIBILITY_CHOICES, default=0)
 
   def __unicode__(self):
-    return self.title
+    return self.name
 
   def get_absolute_url(self):
     return reverse("school_detail", args=[self.id])
