@@ -1,7 +1,7 @@
 {% extends 'base.html' %}
 {% block content %}
-<h1>{{ school.title }}</h1>
-<p>{{ school.description }}</p>
+<h1>{{ school.name }}</h1>
+<p>{{ school.Address }}</p>
 <p>Added {% if school.visibility == 0 %} by <a href="{% url 'user_detail' slug=school.user.username %}">{{ school.user.username }}</a> {% endif %} on {{ school.created_at }}</p>
 {% if school.user == user %}
 <p><a href="{% url 'school_update' pk=school.id %}">Edit school</a></p>

@@ -19,7 +19,7 @@ class Home(TemplateView):
 class SchoolCreateView(CreateView):
     model = School
     template_name = 'school/school_form.html'
-    fields = ['name', 'description', 'visibility']
+    fields = ['name', 'Address', 'visibility']
     success_url = reverse_lazy('school_list')
 
     def form_valid(self, form):
@@ -53,7 +53,7 @@ class SchoolDetailView(DetailView):
 class SchoolUpdateView(UpdateView):
     model = School
     template_name = 'school/school_form.html'
-    fields = ['name', 'description']
+    fields = ['name', 'Address']
     def get_object(self, *args, **kwargs):
         object = super(SchoolUpdateView, self).get_object(*args, **kwargs)
         if object.user != self.request.user:

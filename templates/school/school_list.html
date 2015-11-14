@@ -2,7 +2,7 @@
 {% block content %}
 {% for school in object_list %}
 <div class="panel">
-    <h3><a href="{{ school.get_absolute_url }}">{{ school.title }}</a></h3>
+    <h3><a href="{{ school.get_absolute_url }}">{{ school.name }}</a></h3>
     <p>Added {% if school.visibility == 0 %} by <a href="{% url 'user_detail' slug=school.user.username %}">{{ school.user.username }}</a> {% endif %} on {{ school.created_at }}</p>
     <form method="post" action="{% url 'vote' %}">
     <span class="badge">{{ school.review_set.all.count }} Review{{  school.review_set.all.count|pluralize }}</span>
