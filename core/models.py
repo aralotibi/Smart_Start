@@ -1,3 +1,12 @@
+RATING_CHOICES = (
+(0, 'None'),
+(1, '*'),
+(2, '**'),
+(3, '***'),
+(4, '****'),
+(5, '*****'),
+)
+
 from django.db import models
 from django.contrib.auth.models import User
 from django.core.urlresolvers import reverse
@@ -34,6 +43,7 @@ class Review(models.Model):
 
     def __unicode__(self):
       return self.text
+    rating = models.IntegerField(choices=RATING_CHOICES, default=0)
 
 class Vote(models.Model):
       user = models.ForeignKey(User)

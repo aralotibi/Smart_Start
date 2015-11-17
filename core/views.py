@@ -11,6 +11,7 @@ from django.shortcuts import redirect
 from django.views.generic import FormView
 from .forms import *
 from .models import *
+from django.db.models import Avg
 
 # Create your views here.
 class Home(TemplateView):
@@ -48,6 +49,8 @@ class SchoolDetailView(DetailView):
       context['user_reviews'] = user_reviews
       user_votes = Review.objects.filter(vote__user=self.request.user)
       context['user_votes'] = user_votes
+      rating = Review.objects.filter(school=school).aggregate(Avg('rating'))
+      context['rating'] = rating
       return context
 
 class SchoolUpdateView(UpdateView):
@@ -73,7 +76,7 @@ class SchoolDeleteView(DeleteView):
 class ReviewCreateView(CreateView):
     model = Review
     template_name = "review/review_form.html"
-    fields = ['text', 'visibility']
+    fields = ['text', 'visibility', 'rating']
 
     def get_success_url(self):
         return self.object.school.get_absolute_url()
@@ -91,7 +94,7 @@ class ReviewUpdateView(UpdateView):
     model = Review
     pk_url_kwarg = 'review_pk'
     template_name = 'review/review_form.html'
-    fields = ['text']
+    fields = ['text', 'rating']
 
     def get_success_url(self):
         return self.object.school.get_absolute_url()
