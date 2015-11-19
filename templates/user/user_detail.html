@@ -11,7 +11,7 @@
 
 <h3>Schools ({{ schools.count }})</h3>
 {% for school in schools %}
-    <p><a href="{{ school.get_absolute_url }}">{{ school.title }}</a></p>
+    <p><a href="{{ school.get_absolute_url }}">{{ school.name }}</a></p>
 {% endfor %}
 <h3>Reviews ({{ reviews.count }})</h3>
 {% for review in reviews %}
